@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+  <html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CidadeViva - Denúncia de Problemas Urbanos</title>
+  <style>
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #FFC107;
+      --accent-color: #2196F3;
+      --danger-color: #F44336;
+      --text-color: #333;
+      --light-text: #fff;
+      --bg-color: #f9f9f9;
+      --card-bg: #fff;
+      --border-radius: 8px;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: var(--light-text);
+      padding: 1rem;
+      box-shadow: var(--shadow);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo i {
+      margin-right: 0.5rem;
+      font-size: 1.5rem;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+
+    nav ul li a {
+      color: var(--light-text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      opacity: 0.8;
+    }
+
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--light-text);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    main {
+      margin-top: 70px;
+      padding: 2rem 1rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero {
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/600') center/cover no-repeat;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: var(--light-text);
+      text-align: center;
+      border-radius: var(--border-radius);
+      margin-bottom: 2rem;
+      padding: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-bottom: 2rem;
+      text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: var(--light-text);
+    }
+
+    .btn-primary:hover {
+      background-color: #43a047;
+      transform: translateY(-2px);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .feature-card {
+      background-color: var(--card-bg);
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .map-container {
+      height: 400px;
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      margin-bottom: 3rem;
+      box-shadow: var(--shadow);
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 100%;
+      background-color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #666;
+      font-size: 1.2rem;
+    }
+
+    .reports-section {
+      margin-bottom: 3rem;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 4px;
+      background-color: var(--primary-color);
+    }
+
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .report-card {
+      background-color: var(--card-bg);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .report-img {
+      height: 200px;
+      background-color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .report-content {
+      padding: 1rem;
+    }
+
+    .report-category {
+      display: inline-block;
+      background-color: var(--secondary-color);
+      color: var(--text-color);
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .report-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #666;
+      margin-top: 1rem;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 200;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      overflow: auto;
+    }
+
+    .modal-content {
+      background-color: var(--card-bg);
+      margin: 10% auto;
+      padding: 2rem;
+      border-radius: var(--border-radius);
+      max-width: 600px;
+      animation: modalopen 0.5s;
+    }
+
+    @keyframes modalopen {
+      from {opacity: 0; transform: translateY(-60px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .close-modal {
+      color: #666;
+      float: right;
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    .close-modal:hover {
+      color: var(--text-color);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      border: 1px solid #ddd;
+      border-radius: var(--border-radius);
+      font-size: 1rem;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    .form-control-file {
+      display: none;
+    }
+
+    .file-upload-label {
+      display: block;
+      background-color: #f0f0f0;
+      color: #666;
+      padding: 1rem;
+      border-radius: var(--border-radius);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .file-upload-label:hover {
+      background-color: #e0e0e0;
+    }
+
+    .preview-image {
+      max-width: 100%;
+      max-height: 200px;
+      display: none;
+      margin-top: 1rem;
+      border-radius: var(--border-radius);
+    }
+
+    footer {
+      background-color: #333;
+      color: var(--light-text);
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      text-align: left;
+    }
+
+    .footer-section h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 30px;
+      height: 2px;
+      background-color: var(--primary-color);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--light-text);
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+
+    .social-links a:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+
+      nav ul {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        background-color: var(--primary-color);
+        flex-direction: column;
+        padding: 1rem 0;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      nav ul.show {
+        display: flex;
+      }
+
+      nav ul li {
+        margin: 0.5rem 1rem;
+      }
+
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .modal-content {
+        margin: 20% auto;
+        width: 90%;
+      }
+    }
+
+    /* Animation classes */
+    .fade-in {
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <div class="header-container">
+      <div class="logo">
+        <i class="fas fa-city"></i>
+        <h1>CidadeViva</h1>
+      </div>
+      <button class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav>
+        <ul id="mainMenu">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#mapa">Mapa</a></li>
+          <li><a href="#denuncias">Denúncias</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="inicio" class="hero">
+      <h1>Juntos por uma cidade melhor</h1>
+      <p>Registre problemas urbanos da sua região e ajude a melhorar a qualidade de vida na sua cidade.</p>
+      <a href="#" class="btn btn-primary" id="reportBtn">Registrar uma denúncia</a>
+    </section>
+
+    <section class="features fade-in">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-map-marker-alt"></i>
+        </div>
+        <h3>Geolocalização</h3>
+        <p>Registre problemas com localização precisa usando GPS ou seleção no mapa.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-camera"></i>
+        </div>
+        <h3>Fotos e Evidências</h3>
+        <p>Adicione fotos para documentar os problemas e facilitar a resolução.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Acompanhamento</h3>
+        <p>Monitore o status das suas denúncias e receba notificações sobre atualizações.</p>
+      </div>
+    </section>
+
+    <section id="mapa" class="map-section fade-in">
+      <div class="section-header">
+        <h2 class="section-title">Mapa de Denúncias</h2>
+      </div>
+      <div class="map-container">
+        <div class="map-placeholder">
+          <p>Mapa de denúncias na sua região</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="denuncias" class="reports-section fade-in">
+      <div class="section-header">
+        <h2 class="section-title">Denúncias Recentes</h2>
+        <div class="filter-controls">
+          <select id="categoryFilter" class="form-control">
+            <option value="all">Todas as categorias</option>
+            <option value="buraco">Buracos nas vias</option>
+            <option value="iluminacao">Iluminação</option>
+            <option value="lixo">Lixo acumulado</option>
+            <option value="transporte">Transporte público</option>
+            <option value="outro">Outros</option>
+          </select>
+        </div>
+      </div>
+      <div class="reports-grid" id="reportsGrid">
+        <!-- Exemplo de card de denúncia -->
+        <div class="report-card">
+          <div class="report-img">
+            <img src="/api/placeholder/300/200" alt="Buraco na via">
+          </div>
+          <div class="report-content">
+            <span class="report-category">Buracos nas vias</span>
+            <h3>Buraco na Av. Principal</h3>
+            <p>Buraco grande na pista direita, causando desvios e riscos de acidentes.</p>
+            <div class="report-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Centro</span>
+              <span><i class="fas fa-clock"></i> 2 dias atrás</span>
+            </div>
+          </div>
+        </div>
+        <!-- Exemplo de card de denúncia -->
+        <div class="report-card">
+          <div class="report-img">
+            <img src="/api/placeholder/300/200" alt="Poste sem iluminação">
+          </div>
+          <div class="report-content">
+            <span class="report-category">Iluminação</span>
+            <h3>Poste sem luz há semanas</h3>
+            <p>Rua escura devido a falha em poste de iluminação, gerando insegurança na região.</p>
+            <div class="report-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Bairro Norte</span>
+              <span><i class="fas fa-clock"></i> 5 dias atrás</span>
+            </div>
+          </div>
+        </div>
+        <!-- Exemplo de card de denúncia -->
+        <div class="report-card">
+          <div class="report-img">
+            <img src="/api/placeholder/300/200" alt="Lixo acumulado">
+          </div>
+          <div class="report-content">
+            <span class="report-category">Lixo acumulado</span>
+            <h3>Entulho irregular na calçada</h3>
+            <p>Descarte irregular de lixo e entulho obstruindo passagem de pedestres.</p>
+            <div class="report-meta">
+              <span><i class="fas fa-map-marker-alt"></i> Bairro Leste</span>
+              <span><i class="fas fa-clock"></i> 1 dia atrás</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal para nova denúncia -->
+  <div id="reportModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" id="closeModal">&times;</span>
+      <h2>Registrar Nova Denúncia</h2>
+      <form id="reportForm">
+        <div class="form-group">
+          <label for="reportTitle" class="form-label">Título da denúncia</label>
+          <input type="text" id="reportTitle" class="form-control" placeholder="Ex: Buraco na calçada" required>
+        </div>
+        <div class="form-group">
+          <label for="reportCategory" class="form-label">Categoria</label>
+          <select id="reportCategory" class="form-control" required>
+            <option value="">Selecione uma categoria</option>
+            <option value="buraco">Buracos nas vias</option>
+            <option value="iluminacao">Iluminação</option>
+            <option value="lixo">Lixo acumulado</option>
+            <option value="transporte">Transporte público</option>
+            <option value="outro">Outros</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="reportDescription" class="form-label">Descrição</label>
+          <textarea id="reportDescription" class="form-control" rows="4" placeholder="Descreva o problema em detalhes..." required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="reportLocation" class="form-label">Endereço</label>
+          <input type="text" id="reportLocation" class="form-control" placeholder="Ex: Av. Principal, 123" required>
+        </div>
+        <div class="form-group">
+          <label for="reportNeighborhood" class="form-label">Bairro</label>
+          <input type="text" id="reportNeighborhood" class="form-control" placeholder="Ex: Centro" required>
+        </div>
+        <div class="form-group">
+          <input type="file" id="reportImage" class="form-control-file" accept="image/*">
+          <label for="reportImage" class="file-upload-label">
+            <i class="fas fa-camera"></i> Selecionar foto
+          </label>
+          <img id="imagePreview" class="preview-image" src="#" alt="Preview">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar denúncia</button>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Sobre o CidadeViva</h3>
+        <p>Uma plataforma cidadã para melhorar nossa cidade através da participação ativa da comunidade.</p>
+      </div>
+      <div class="footer-section">
+        <h3>Links Rápidos</h3>
+        <ul>
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#mapa">Mapa</a></li>
+          <li><a href="#denuncias">Denúncias</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contato</h3>
+        <p><i class="fas fa-envelope"></i> contato@cidadeviva.com.br</p>
+        <p><i class="fas fa-phone"></i> (11) 99999-9999</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 CidadeViva. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Menu responsivo
+    const menuToggle = document.getElementById('menuToggle');
+    const mainMenu = document.getElementById('mainMenu');
+
+    menuToggle.addEventListener('click', () => {
+      mainMenu.classList.toggle('show');
+    });
+
+    // Modal de denúncia
+    const reportBtn = document.getElementById('reportBtn');
+    const reportModal = document.getElementById('reportModal');
+    const closeModal = document.getElementById('closeModal');
+
+    reportBtn.addEventListener('click', () => {
+      reportModal.style.display = 'block';
+    });
+
+    closeModal.addEventListener('click', () => {
+      reportModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      if (e.target === reportModal) {
+        reportModal.style.display = 'none';
+      }
+    });
+
+    // Preview de imagem
+    const reportImage = document.getElementById('reportImage');
+    const imagePreview = document.getElementById('imagePreview');
+
+    reportImage.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          imagePreview.src = e.target.result;
+          imagePreview.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Formulário de denúncia
+    const reportForm = document.getElementById('reportForm');
+    const reportsGrid = document.getElementById('reportsGrid');
+
+    reportForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Obter valores do formulário
+      const title = document.getElementById('reportTitle').value;
+      const category = document.getElementById('reportCategory');
+      const categoryText = category.options[category.selectedIndex].text;
+      const description = document.getElementById('reportDescription').value;
+      const neighborhood = document.getElementById('reportNeighborhood').value;
+      
+      // Criar novo card de denúncia
+      const newReport = document.createElement('div');
+      newReport.className = 'report-card';
+      newReport.innerHTML = `
+        <div class="report-img">
+          ${imagePreview.style.display === 'block' ? 
+            `<img src="${imagePreview.src}" alt="${title}">` : 
+            `<img src="/api/placeholder/300/200" alt="${title}">`}
+        </div>
+        <div class="report-content">
+          <span class="report-category">${categoryText}</span>
+          <h3>${title}</h3>
+          <p>${description}</p>
+          <div class="report-meta">
+            <span><i class="fas fa-map-marker-alt"></i> ${neighborhood}</span>
+            <span><i class="fas fa-clock"></i> Agora</span>
+          </div>
+        </div>
+      `;
+      
+      // Adicionar ao grid de denúncias
+      reportsGrid.prepend(newReport);
+      
+      // Fechar modal e resetar formulário
+      reportModal.style.display = 'none';
+      reportForm.reset();
+      imagePreview.style.display = 'none';
+      
+      // Mostrar confirmação
+      alert('Denúncia registrada com sucesso!');
+    });
+
+    // Filtro de categorias
+    const categoryFilter = document.getElementById('categoryFilter');
+    categoryFilter.addEventListener('change', function() {
+      const selectedValue = this.value;
+      const reports = document.querySelectorAll('.report-card');
+      
+      reports.forEach(report => {
+        const reportCategory = report.querySelector('.report-category').textContent;
+        
+        if (selectedValue === 'all' || reportCategory === categoryFilter.options[categoryFilter.selectedIndex].text) {
+          report.style.display = 'block';
+        } else {
+          report.style.display = 'none';
+        }
+      });
+    });   
+
+    // Efeito de scroll suave
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 70,
+            behavior: 'smooth'
+          });
+        }
+        
+        // Fechar menu móvel ao clicar
+        if (window.innerWidth <= 768) {
+          mainMenu.classList.remove('show');
+        }
+      });
+    });
+
+    // Animação de scroll
+    const fadeElements = document.querySelectorAll('.fade-in');
+    
+    function checkFade() {    
+      fadeElements.forEach(element => {
+        const elementTop = element.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        
+        if (elementTop < windowHeight - 100) {
+          element.style.opacity = '1';
+          element.style.transform = 'translateY(0)';
+        }
+      });
+    }
+    
+    // Inicializar com opacidade 0
+    fadeElements.forEach(element => {
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(20px)';
+      element.style.transition = 'opacity 1s ease, transform 1s ease';
+    });
+    
+    // Verificar ao carregar e ao rolar
+    window.addEventListener('load', checkFade);
+    window.addEventListener('scroll', checkFade);
+
+    // Simulação de dados para o mapa (em uma aplicação real, isso seria carregado de um backend)
+    function initMap() {
+      // Este é um placeholder para uma função de inicialização de mapa
+      // Em um cenário real, utilizaríamos uma API como Google Maps ou Leaflet
+      console.log('Mapa inicializado (simulação)');
+    }
+
+    // Chamar a função de inicialização após carregar a página
+    window.addEventListener('load', initMap);
+  </script>
+</body>
+</html>
